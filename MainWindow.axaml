@@ -4,34 +4,148 @@
         x:Class="BreathingApp.MainWindow"
         x:DataType="local:BreathingViewModel"
         Title="Box Breathing"
-        Width="400" Height="480">
-    
+        Width="400" Height="600"
+        Background="#060e14">
+
     <Window.DataContext>
         <local:BreathingViewModel />
     </Window.DataContext>
 
-    <StackPanel Margin="20">
-        <TextBlock Text="{Binding PhaseText}" 
-                   FontSize="32" 
+    <StackPanel Margin="0,32,0,0">
+
+        <!-- Top label -->
+        <TextBlock Text="BOX BREATHING"
+                   FontSize="12"
+                   LetterSpacing="4"
                    HorizontalAlignment="Center"
-                   Margin="0,0,0,20"/>
+                   Foreground="#4a7a8a"
+                   Margin="0,0,0,16"/>
 
-        <Canvas Width="300" Height="300" 
-                Background="LightGray"
+        <!-- Phase text -->
+        <TextBlock Text="{Binding PhaseText}"
+                   FontSize="38"
+                   FontFamily="Georgia"
+                   HorizontalAlignment="Center"
+                   Foreground="{Binding PhaseColor}"
+                   Margin="0,0,0,6"/>
+
+        <!-- Sub label -->
+        <TextBlock Text="{Binding SubText}"
+                   FontSize="12"
+                   LetterSpacing="2"
+                   HorizontalAlignment="Center"
+                   Foreground="#3a6070"
+                   Margin="0,0,0,24"/>
+
+        <!-- Canvas -->
+        <Border Width="300" Height="300"
+                Background="#0a1820"
+                BorderBrush="#0e3045"
+                BorderThickness="1"
+                CornerRadius="4"
                 HorizontalAlignment="Center">
-            <Rectangle Stroke="#EE0202" StrokeThickness="3"
-                       Width="200" Height="200"
-                       Canvas.Left="50" Canvas.Top="50"
-                       Fill="Transparent"/>
-            <Ellipse Width="30" Height="30" Fill="#FFFB00"
-                     Canvas.Left="{Binding BallX}"
-                     Canvas.Top="{Binding BallY}"/>
-        </Canvas>
+            <Canvas Width="300" Height="300">
 
-        <!-- Single toggle button -->
-        <Button Content="{Binding ButtonText}" 
+                <!-- Guide lines -->
+                <Line StartPoint="50,150" EndPoint="250,150"
+                      Stroke="#0e2535" StrokeThickness="0.5"
+                      StrokeDashArray="3,6"/>
+                <Line StartPoint="150,50" EndPoint="150,250"
+                      Stroke="#0e2535" StrokeThickness="0.5"
+                      StrokeDashArray="3,6"/>
+
+                <!-- Square -->
+                <Rectangle Width="200" Height="200"
+                           Canvas.Left="50" Canvas.Top="50"
+                           Fill="Transparent"
+                           Stroke="#1a5c7a"
+                           StrokeThickness="1.5"
+                           Opacity="0.6"
+                           RadiusX="3" RadiusY="3"/>
+
+                <!-- Side labels -->
+                <TextBlock Text="INHALE"
+                           FontSize="10"
+                           Foreground="#1a4a5a"
+                           Canvas.Left="258" Canvas.Top="140">
+                    <TextBlock.RenderTransform>
+                        <RotateTransform Angle="90"/>
+                    </TextBlock.RenderTransform>
+                </TextBlock>
+                <TextBlock Text="EXHALE"
+                           FontSize="10"
+                           Foreground="#1a4a5a"
+                           Canvas.Left="4" Canvas.Top="168">
+                    <TextBlock.RenderTransform>
+                        <RotateTransform Angle="-90"/>
+                    </TextBlock.RenderTransform>
+                </TextBlock>
+                <TextBlock Text="HOLD"
+                           FontSize="10"
+                           Foreground="#1a4a5a"
+                           Canvas.Left="125" Canvas.Top="18"/>
+                <TextBlock Text="HOLD"
+                           FontSize="10"
+                           Foreground="#1a4a5a"
+                           Canvas.Left="125" Canvas.Top="272"/>
+
+                <!-- Ball glow layer -->
+                <Ellipse Width="24" Height="24"
+                         Fill="#1a5c7a"
+                         Opacity="0.4"
+                         Canvas.Left="{Binding GlowX}"
+                         Canvas.Top="{Binding GlowY}"/>
+
+                <!-- Ball -->
+                <Ellipse Width="16" Height="16"
+                         Fill="#e8f4f8"
+                         Canvas.Left="{Binding BallX}"
+                         Canvas.Top="{Binding BallY}"/>
+
+                <!-- Ball inner highlight -->
+                <Ellipse Width="6" Height="6"
+                         Fill="#ffffff"
+                         Opacity="0.8"
+                         Canvas.Left="{Binding HighlightX}"
+                         Canvas.Top="{Binding HighlightY}"/>
+
+            </Canvas>
+        </Border>
+
+        <!-- Countdown -->
+        <Border Width="56" Height="56"
+                Background="#0a1820"
+                BorderBrush="#0e3045"
+                BorderThickness="1"
+                CornerRadius="28"
                 HorizontalAlignment="Center"
-                Margin="0,30,0,0"
-                Click="OnToggleClick"/>
+                Margin="0,20,0,0">
+            <TextBlock Text="{Binding Countdown}"
+                       FontSize="22"
+                       FontFamily="Georgia"
+                       HorizontalAlignment="Center"
+                       VerticalAlignment="Center"
+                       Foreground="#4a9ab5"/>
+        </Border>
+
+        <!-- Start/Stop button -->
+        <Border Width="110" Height="36"
+                BorderBrush="#1a5c7a"
+                BorderThickness="1.5"
+                CornerRadius="18"
+                HorizontalAlignment="Center"
+                Margin="0,16,0,0">
+            <Button Content="{Binding ButtonText}"
+                    Background="Transparent"
+                    Foreground="#4a9ab5"
+                    FontSize="13"
+                    FontFamily="Georgia"
+                    HorizontalAlignment="Center"
+                    VerticalAlignment="Center"
+                    HorizontalContentAlignment="Center"
+                    BorderThickness="0"
+                    Click="OnToggleClick"/>
+        </Border>
+
     </StackPanel>
 </Window>
